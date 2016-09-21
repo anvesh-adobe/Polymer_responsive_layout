@@ -1,0 +1,203 @@
+<dom-module id="body-element">
+  <link rel="import" type="css" href="../app.css"/>
+  <template>
+    <div class="body-content">
+      <ul class="list-inline">
+        <template is="dom-repeat" items="{{menuItems}}">
+          <li><a href="#">{{item.name}}</a></li>
+        </template>
+      </ul>
+
+      <div class="site">
+        <div class="pull-left">
+          <span>Site Acq</span>
+        </div>
+        <div class="pull-right">
+          <span>John Smith</span>
+          <span>Delivery Manager Lead</span>
+        </div>
+      </div>
+      <div class="site-sub-menu">
+        <div class="pull-left">
+          <img src="../images/Accordian/Accordian%20-%20Checkmark.svg">
+          <span>Site Acq 1</span>
+        </div>
+        <div class="pull-right">
+          <img src="../images/Accordian/Accordian%20-%20Expand.svg">
+        </div>
+      </div>
+      <div class="site-sub-menu">
+        <div class="pull-left">
+          <img src="../images/Accordian/Accordian%20-%20Checkmark.svg">
+          <span>Site Acq 2</span>
+        </div>
+        <div class="pull-right">
+          <img src="../images/Accordian/Accordian%20-%20Expand.svg">
+        </div>
+      </div>
+      <div class="site-sub-menu">
+        <div class="pull-left">
+          <img src="../images/Accordian/Accordian%20-%20Checkmark.svg">
+          <span>Site Acq 3</span>
+        </div>
+        <div class="pull-right">
+          <img src="../images/Accordian/Accordian%20-%20Expand.svg">
+        </div>
+      </div>
+
+      <div class="site">
+        <div class="pull-left">
+          <span>Ground Construction</span>
+        </div>
+        <div class="pull-right">
+          <span>Thomas Leary</span>
+          <span>DM Regional Lead</span>
+        </div>
+      </div>
+
+      <div class="site-sub-menu">
+        <div class="pull-left">
+          <img src="../images/Accordian/Accordian%20-%20Checkmark.svg">
+          <span>Ground Construction 1</span>
+        </div>
+        <div class="pull-right">
+          <img src="../images/Accordian/Accordian%20-%20Expand.svg">
+        </div>
+      </div>
+      <div class="site-sub-menu">
+        <div class="pull-left">
+          <img src="../images/Accordian/Accordian%20-%20Checkmark.svg">
+          <span>Ground Construction 2</span>
+        </div>
+        <div class="pull-right">
+          <img src="../images/Accordian/Accordian%20-%20Expand.svg">
+        </div>
+      </div>
+      <div class="site-sub-menu">
+        <div class="pull-left">
+          <img src="../images/Accordian/Accordian%20-%20Checkmark.svg">
+          <span>Ground Construction 3</span>
+        </div>
+        <div class="pull-right">
+          <img src="../images/Accordian/Accordian%20-%20Expand.svg">
+        </div>
+      </div>
+
+      <div class="site">
+        <div class="pull-left">
+          <span>Tower Work</span>
+        </div>
+        <div class="pull-right hamburger-menu">
+          <img src="../images/Accordian/Accordian%20-%20Menu.svg" on-click="_showBlinker">
+        </div>
+        <div class="pull-right">
+          <span>Chris Gray</span>
+          <span>Delivery Manager Lead</span>
+        </div>
+      </div>
+
+      <div class="site-sub-menu">
+        <div class="pull-left">
+          <img src="../images/Accordian/Accordian%20-%20Checkmark.svg">
+          <span>Tower Work 1</span>
+        </div>
+        <div class="pull-right">
+          <img src="../images/Accordian/Accordian%20-%20Expand.svg">
+        </div>
+      </div>
+      <div class="site-sub-menu">
+        <div class="pull-left">
+          <img src="../images/Accordian/Accordian%20-%20Checkmark.svg">
+          <span>Tower Work 2</span>
+        </div>
+        <div class="pull-right">
+          <img src="../images/Accordian/Accordian%20-%20Expand.svg">
+        </div>
+      </div>
+      <div class="site-sub-menu">
+        <div class="pull-left">
+          <img src="../images/Accordian/Accordian%20-%20Checkmark.svg">
+          <span class="accordion-icon blinker" on-click="_toggleInstallTower">Tower work 3</span>
+        </div>
+        <div class="pull-right">
+          <img src="../images/Accordian/Accordian%20-%20Expand.svg">
+        </div>
+      </div>
+      <div class="tasks" hidden$="{{hideMenu}}">
+        <div class="site-sub-menu">
+          <div class="pull-left">
+            <input type="checkbox">
+            <span>Task One</span>
+          </div>
+          <div class="pull-right">
+            <span>Chris Gray (Me)</span>
+            <img src="../images/Images/Profile%20Picture%20-%20Chris%20Smith.png" height="35" width="35">
+            <img src="../images/Navigation/My%20Tasks.svg" height="30" width="30">
+          </div>
+        </div>
+        <div class="site-sub-menu">
+          <div class="pull-left">
+            <input type="checkbox">
+            <span>Task Two</span>
+          </div>
+          <div class="pull-right">
+            <span>Unassigned</span>
+            <img src="../images/Accordian/Accordian%20-%20Expand.svg">
+          </div>
+        </div>
+        <div class="site-sub-menu">
+          <div class="pull-left">
+            <input type="checkbox">
+            <span>Task Three</span>
+          </div>
+          <div class="pull-right">
+            <span>Unassigned</span>
+            <img src="../images/Accordian/Accordian%20-%20Expand.svg">
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'body-element',
+    properties: {
+      menuItems: {
+        type: Array,
+        notify: true,
+        value: function(){
+          return [
+            {'name': 'Project Plan' },
+            {'name': 'Sites' },
+            {'name': 'Quality Check 2' },
+            {'name': 'Milestones' },
+            {'name': 'People' },
+            {'name': 'Files' },
+            {'name': 'Messages' }
+          ]
+        }
+      },
+
+      hideMenu: {
+        type: Boolean,
+        value: true
+      }
+    },
+
+    _toggleInstallTower: function() {
+      this.hideMenu = !this.hideMenu;
+    },
+
+    _showBlinker: function() {
+      var self = this;
+      this.querySelector('.blinker').classList.add("blink");
+
+      setTimeout(function(){
+        self.querySelector('.blinker').classList.remove("blink");
+      },1000);
+    }
+
+  });
+</script>

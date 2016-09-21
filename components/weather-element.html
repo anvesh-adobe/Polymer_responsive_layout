@@ -1,0 +1,102 @@
+
+<dom-module id="weather-element">
+  <link rel="import" type="css" href="../app.css"/>
+  <template>
+    <div class="weather">
+      <div class="partly-cloudy">
+        <img src="../images/Weather/Weather%20-%20Partly%20Cloudy.svg">
+        <p>{{currentTemp}} &deg;</p>
+        <div class="cloudy">{{weather.weather.0.main}}</div>
+        <template is="dom-repeat" items="{{forecastData.list}}">
+          <div class$="next-days {{item.icon}}">{{item.day}} {{item.temp.day}} &deg; &nbsp;</div>
+        </template>
+        <div class="sunset">
+          <div class="sunset-time">{{sunset}}</div>
+          <div class="sunset-label">Sunset</div>
+        </div>
+        <div class="more-weather">See more Weather</div>
+      </div>
+    </div>
+    <iron-ajax
+      auto
+      id="getCurrentWeather"
+      url="http://api.openweathermap.org/data/2.5/weather?q=Dallas&APPID=d992263c84b98b3293036358496679a9&units=imperial"
+      handle-as="json"
+      on-response="_handleTempData"></iron-ajax>
+    <iron-ajax
+      auto
+      id="getForecast"
+      url="http://api.openweathermap.org/data/2.5/forecast/daily?q=Dallas&APPID=d992263c84b98b3293036358496679a9&units=imperial&cnt=4"
+      handle-as="json"
+      on-response="_handleForecastData"></iron-ajax>
+  </template>
+</dom-module>
+<script>
+
+  Polymer({
+    is: 'weather-element',
+    properties: {
+      weather: {
+        type: Object,
+        notify: true
+      },
+      currentTemp: {
+        type: Number,
+        notify: true
+      },
+      sunset: {
+        type: String,
+        notify: true
+      },
+      forecastData: {
+        type: Object,
+        notify: true
+      },
+      currentDay: {
+        type: Array,
+        value: [
+          {'val': 0, name: 'Sun'},
+          {'val': 1, name: 'Mon'},
+          {'val': 2, name: 'Tue'},
+          {'val': 3, name: 'Wed'},
+          {'val': 4, name: 'Thur'},
+          {'val': 5, name: 'Fri'},
+          {'val': 6, name: 'Sat'}
+
+        ]
+      }
+    },
+
+    _handleTempData: function(e){
+      this.weather = e.detail.response;
+      this.currentTemp = Math.round(e.detail.response.main.temp);
+      this.sunset = new Date(e.detail.response.sys.sunset * 1000).toLocaleTimeString();
+    },
+
+    _handleForecastData : function(e) {
+      var self = this;
+      var forecastData = e.detail.response;
+
+      /* Getting day out of timestamp */
+      forecastData.list.forEach(function(item){
+          var timeInMillis = item.dt * 1000;
+          var day = new Date(timeInMillis).getDay();
+          item.day = self.currentDay[day].name;
+          item.temp.day = Math.round(item.temp.day);
+          if(item.weather[0].main === "Clouds"){
+            item.icon = 'clouds';
+          }
+          else if(item.weather[0].main === "Rain") {
+            item.icon = 'rain';
+          }
+          else {
+            item.icon = 'thurs';
+          }
+      });
+      /* Need to splice the first Object because its giving current day as well*/
+      forecastData.list.splice(0,1);
+      this.forecastData = forecastData;
+    }
+
+  });
+</script>

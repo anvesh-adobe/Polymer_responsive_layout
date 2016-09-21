@@ -1,0 +1,136 @@
+<dom-module id="header-element">
+  <link rel="import" href="weather-element.html"/>
+  <link rel="import" type="css" href="../app.css"/>
+  <template>
+    <div class="header-bar">
+
+      <div class="bitmap-container">
+        <span class="toggle-menu" on-click="toggleNavMenu">
+          <img src="../images/Navigation/Hamburger.svg" height="25" width="25">
+        </span>
+        <span class="logo">
+          <img src="../images/Images/App%20Logo.png" height="25" width="25">
+        </span>
+        <span class="search">
+          <img src="../images/Navigation/Search%20Icon.svg" height="17.5" width="17.5">
+        </span>
+        <span class="chris-smith">Chris Smith</span>
+        <span class="smith-image">
+            <img src="../images/Images/Profile%20Picture%20-%20Chris%20Smith.png" height="50" width="50">
+            <img src="../images/Accordian/Accordian%20-%20Menu.svg" height="18" width="10">
+        </span>
+      </div>
+
+      <div class="bitmap">
+        <div class="main-bar">
+          <div class="in-progress pull-right">In Progress
+            <img src="../images/Accordian/Accordian%20-%20In%20Progress.svg" height="20" width="20">
+          </div>
+          <div class="module-class">
+            <p class="module-refresh">GSM Module Refresh Program</p>
+            <p class="module-refresh">ATT12412</p>
+            <p class="module-address">1232 Main St. Dallas, TX 75675</p>
+            <p class="module-map">View Map</p>
+          </div>
+          <div class="region-bar">
+            <span class="region-bar-span">
+              <img src="../images/Workboard/Region%20-%20White%20Icon.svg" width="20" height="20">
+              <span class="region-main">Region</span>
+              <span class="region-label">Midwest</span>
+            </span>
+            <span class="region-bar-span">
+                <img src="../images/Workboard/Market%20-%20White%20Icon.svg" width="20" height="20">
+                <span class="region-main">Market</span>
+                <span class="region-label">Wisconsin</span>
+            </span>
+            <span class="region-bar-span">
+                <img src="../images/Workboard/FA%20Location%20-%20White%20Icon.svg" width="20" height="20">
+                <span class="region-main">FA Location</span>
+                <span class="region-label">123333</span>
+            </span>
+            <span class="region-bar-span">
+                <img src="../images/Workboard/Type%20-%20White%20Icon.svg" width="20" height="20">
+                <span class="region-main">FA Type</span>
+                <span class="region-label">Lattice Tower</span>
+            </span>
+          </div>
+          <div class="bottom-bar">
+            <div class="all-tasks">All Tasks</div>
+            <template is="dom-repeat" items="{{tasks}}">
+              <div class="layer">
+                <div>{{item.value}}</div>
+                <div class="layer-label">{{item.name}}</div>
+              </div>
+            </template>
+          </div>
+        </div>
+        <weather-element></weather-element>
+      </div>
+    </div>
+
+    <div class="navigation-menu">
+      <img src="../images/Navigation/Hamburger%20-%20Close%20.svg" class="close-icon" on-click="toggleNavMenu">
+      <template is="dom-repeat" items="{{navigation}}">
+        <div><img src$="{{item.image}}">{{item.name}}</div>
+      </template>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+
+  Polymer({
+    is: 'header-element',
+    properties: {
+      tasks: {
+        type: Array,
+        notify: true,
+        value: function(){
+          return [
+            {'name': 'Total', 'value': 63 },
+            {'name': 'Completed', 'value': 30 },
+            {'name': 'Started', 'value': 10 },
+            {'name': 'Pending', 'value': 23 },
+            {'name': 'Un-Assigned', 'value': 10 },
+            {'name': 'Un-Scheduled', 'value': 12 }
+          ]
+        }
+      },
+
+      navigation: {
+        type: Array,
+        notify: true,
+        value: function(){
+          return [
+            {'name': 'Workboard', 'image': 'images/Navigation/Workboard.svg' },
+            {'name': 'Dashboard', 'image': 'images/Navigation/Dashboard.svg' },
+            {'name': 'My Tasks', 'image': 'images/Navigation/My%20Tasks.svg' },
+            {'name': 'Work', 'image': 'images/Navigation/Work.svg' },
+            {'name': 'Approvals', 'image': 'images/Navigation/Approvals.svg' },
+            {'name': 'Reports', 'image': 'images/Navigation/Reports.svg' },
+            {'name': 'Files', 'image': 'images/Navigation/Files.svg' },
+            {'name': 'Map', 'image': 'images/Navigation/Map.svg' },
+            {'name': 'Calendar', 'image': 'images/Navigation/Calendar.svg' }
+          ]
+        }
+      }
+    },
+
+    toggleNavMenu: function() {
+      var el = this.$$('.navigation-menu');
+      var headerBar = this.$$('.header-bar');
+      if(el.classList.contains('show')) {
+        el.classList.remove('show');
+        document.querySelector('body').style.overflow = 'auto';
+//        headerBar.style.opacity = 1;
+
+      }
+      else {
+        el.classList.add('show');
+        document.querySelector('body').style.overflow = 'hidden';
+//        headerBar.style.opacity = 0.3;
+      }
+    }
+
+  });
+</script>
